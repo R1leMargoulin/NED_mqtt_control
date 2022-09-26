@@ -3,7 +3,7 @@ sudo chmod -R 777 ros
 sudo chmod -R 777 pkg_python_self_api
 cp -r ros/extra_port ~/catkin_ws/install/release/ned/share
 cp -r ros/rfid ~/catkin_ws/install/release/ned/share
-cp -r ros/mlf_mqtt ~/catkin_ws/install/release/ned/share
+cp -r ros/mqtt ~/catkin_ws/install/release/ned/share
 cp -r ros/mlf_vision_treatment ~/catkin_ws/install/release/ned/share/
 cp -r pkg_python_self_api ~/
 cp bootStart.sh ~/
