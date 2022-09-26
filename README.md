@@ -126,7 +126,7 @@ After the catkin_make (after the 100%), the installs should be finished.
 
 The next step will explain how to automatically run the programs on boot
 
-## 2.2 - run on boot
+## 2.2 - Boot Start
 
 somes manip are to do to automaticly run the programs on boot.
 
