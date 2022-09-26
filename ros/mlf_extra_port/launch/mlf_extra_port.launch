@@ -1,0 +1,4 @@
+<launch>
+
+    <node name="conveyor_srv_client" pkg="mlf_extra_port" type="Conveyor_srv_client.py" output="screen"/>
+</launch>

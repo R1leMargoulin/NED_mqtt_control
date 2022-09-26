@@ -1,0 +1,4 @@
+<launch>
+
+    <node name="rfid_read" pkg="rfid" type="rfid_read.py" output="screen"/>
+</launch>

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="mlf_name" default="$(env MLF_NAME)"/>
+
+    <node name="rfid_send" pkg="mlf_mqtt" type="rfid_send.py" output="screen">
+        <param name="mlf_name" type="str" value="$(arg mlf_name)"/>
+    </node>
+    <node name="gpio_send" pkg="mlf_mqtt" type="gpio_send.py" output="screen">
+        <param name="mlf_name" type="str" value="$(arg mlf_name)"/>
+    </node>
+    <include file="$(find mlf_vision_treatment)/launch/mlf_vision_treatment.launch"></include>
+</launch>

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "NED_mqtt_command",
+			"path": "D:/repos/NED_mqtt_command"
+		},
+		{
+			"name": "pkg_python_self_api",
+			"path": "../../pkg_python_self_api"
+		},
+		{
+			"name": "ros",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

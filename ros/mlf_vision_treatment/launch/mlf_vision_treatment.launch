@@ -1,0 +1,3 @@
+<launch>
+    <node name="mlf_vision_treatment" pkg="mlf_vision_treatment" type="mlf_vision_treatment.py" output="screen"/>
+</launch>
