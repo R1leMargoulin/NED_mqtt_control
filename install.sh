@@ -6,9 +6,7 @@ cp -r ros/rfid ~/catkin_ws/install/release/ned/share
 cp -r ros/mqtt ~/catkin_ws/install/release/ned/share
 cp -r pkg_python_self_api ~/
 cp bootStart.sh ~/
-cp ~/install_mlf/ros/launchBringup/niryo_robot_base_robot.launch.xml ~/catkin_ws/install/release/ned/share/niryo_robot_bringup/launch
-
-#echo -e "source /home/niryo/catkin_ws/install/release/ned/setup.bash\nexport MLF_NAME=NED2\n\n#AUTOBOOT\nTerminal=`tty`\n        '/dev/tty1')\n                ~/bootStart.sh\n                ;;\nesac" >> ~/.bashrc
+cp ~/NED_mqtt_control/ros/launchBringup/niryo_robot_base_robot.launch.xml ~/catkin_ws/install/release/ned/share/niryo_robot_bringup/launch
 
 
 #adding self-api and virtual env

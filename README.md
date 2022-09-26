@@ -61,7 +61,7 @@ make this command on your computer shell, replacing “$PATH” with the path th
 
 ```bash
 #ON YOUR COMPUTER
-scp -r $CHEMINDEVOTREPC/install_mlf niryo@169.254.200.200:~/
+scp -r $CHEMINDEVOTREPC/NED_mqtt_control niryo@169.254.200.200:~/
 ```
 
 then reconnect to the robot in SSH
@@ -72,7 +72,7 @@ Maintenant, on va lancer la configuration réseau automatisée. connectez vous e
 ```bash
 #SSH on the robot
 cd
-cd install_mlf
+cd NED_mqtt_control
 chmod 777 * #type sudo befor the line if you have a permission error
 ./network.sh
 
@@ -102,7 +102,7 @@ make this command on your computer shell, replacing “$PATH” with the path th
 ```bash
 #SUR VOTRE ORDINATEUR OU IL Y A LE DOSSIER!!!
 #pensez a changer l'ip
-scp -r $CHEMINDEVOTREPC/install_mlf niryo@169.254.200.200:~/
+scp -r $CHEMINDEVOTREPC/NED_mqtt_control niryo@169.254.200.200:~/
 ```
 
 then reconnect to the robot in SSH
@@ -114,12 +114,12 @@ some confirmations will be asked.
 
 ```bash
 #ssh on robot
-cd ~/install_mlf
+cd ~/NED_mqtt_control
 
 sudo chmod 777 *
 #default password: robotics
 
-sudo ./install_mlf.sh
+sudo ./install.sh
 ```
 
 After the catkin_make (after the 100%), the installs should be finished.
