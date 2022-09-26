@@ -20,7 +20,7 @@ class NedCMD(threading.Thread):
     def __init__(self, ip , nedinfos, conveyor, linkedrobot = 0): #demarrage et initialisation du thread
         threading.Thread.__init__(self)
         #NIRYO START------------------------------------------------------------
-        self.mlf_name = socket.gethostname()
+        self.name = socket.gethostname()
         self.ned = nedinfos
         self.ip = ip
         self.ned.calibrate_auto()
@@ -57,11 +57,7 @@ class NedCMD(threading.Thread):
             if(len(self.mqtt.commandList) > 0):
                 cmd = self.mqtt.commandList.pop(0).split(" ")
                 print(cmd)
-                if(cmd[0] == "StartLine"):
-                    self.move_ligne()
-                elif(cmd[0] =="StartPerpendiculaire"):
-                    self.move_Perpendiculaire()
-                elif(cmd[0] =="pick"):
+                if(cmd[0] =="pick"):
                     self.pickCmdHandling(cmd)
                 elif(cmd[0] =="assembling"):
                     self.assemblingCmdHandling(cmd)
@@ -92,54 +88,7 @@ class NedCMD(threading.Thread):
                     self.cmdMaxSpeed(int(cmd[1]))
                 else:
                     time.sleep(0.1)
-            
-
-    def move_Perpendiculaire(self): #fonction de deplacement simple en utilisant les attributs enregistres dans le classe, on bouge aussi la pince
-            self.conveyorUpdate(100, -1)
-            while(self.mqtt.pins.getpins()["1A"] != False):
-                time.sleep(0.1)
-                # print("..")
-                # print(".......")
-            
-            self.mqtt.publish("conveyor 0 1")
-            #TAKES AN OBJECT IN THE STOCK--------------------------------------------
-            self.mqtt.publish("move (-2.700,0.606,-0.344,0.118,-1.603,-0.227)")
-            self.mqtt.publish("pick StockBack -translation(0,0,-0.055)")
-            #------------------------------------------------------------------------
-            #ASSEMBLING--------------------------------------------------------------
-            self.mqtt.publish("move (0.023,0.606,-0.376,-0.063,-1.687,-0.237)")
-            self.mqtt.publish("assembling mlf -rotationToZero(1) -Zdown(0.04)")
-            self.mqtt.publish("move (0.0,0.0,0.0,0.0,0.0,0.0)")
-            self.mqtt.publish("conveyor 100 -1")
-            self.mqtt.publish("wait 5")
-            time.sleep(0.1)
-            #------------------------------------------------------------------------
-
-    def move_ligne(self):
-        self.mqtt.publish("move (0.0,0.0,0.0,0.0,0.0,0.0)")
-        self.mqtt.publish("conveyor 100 1")
-        while(self.mqtt.VerifRfidState != 1): #si une piece a ete detecte par rfid
-            time.sleep(0.1)
-        self.mqtt.publish("conveyor 0 1")
-        if(self.mqtt.finishedForMe >= 1): #si le ned associe en perpendiculaire a fini son travail
-                
-            #prise sur le perpendiculaire--------------------------------------------
-            self.mqtt.publish("move (-0.243,-0.971,0.274,-0.008,-0.885,0.533)")
-            # self.ned.shift_pose(RobotAxis.Z, -0.02)
-            # self.ned.grasp_with_tool()
-            self.pick_over(0.005, -0.005, -0.02)
-            self.mqtt.publish("translation 0.005 -0.005 -0.02")
-            self.mqtt.finishedForMe_decr()
-            #------------------------------------------------------------------------
-            self.mqtt.publish("move (-0.433,0.599,-0.214,-0.009,-1.783,-0.058)")
-            #detection et placement sur piece principale-----------------------------
-            if(True):
-                self.mqtt.publish("assembling mlf -rotationToZero(1) -Zdown(0.04)")
-                self.mqtt.publish("conveyor 100 1")
-                self.mqtt.publish("StartLine")
-            #------------------------------------------------------------------------
-        
-
+                    
     def move(self, goto):
         self.ned.move_joints(goto[0], goto[1], goto[2], goto[3], goto[4], goto[5])
     

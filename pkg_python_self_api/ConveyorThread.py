@@ -10,7 +10,7 @@ class Conveyor(threading.Thread):
         self.max_length = 65000
         gw = os.popen("/sbin/ifconfig eth0 | grep inet |awk '{ print $2}'").read().split()
         self.UDP_IP = gw[0] #ned IP
-        self.UDP_PORT = 5004 #port defined in mlf_extra_port
+        self.UDP_PORT = 5004 
         self.currentSpeed = 0 #set speed to 0
         self.currentDirection = 1 #default direction = 1
         self.wantedSpeed = 100 #wanted speed and wanted direction verify that we dont send useless messages if the current speed and direction are se same that our wanted ones

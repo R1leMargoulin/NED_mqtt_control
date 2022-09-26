@@ -12,45 +12,18 @@ class Gpio_pins():
         self.pins = newpins
     def getpins(self):
         return(self.pins)
-    
-# class  Gpio_Thread(threading.Thread):
-#     def __init__(self, mlf_name): #demarrage et initialisation du thread
-#         threading.Thread.__init__(self)
-#         self.mlf_name = mlf_name
-#         self.client = mqtt.Client(self.mlf_name+"_master")
-#         self.client.connect("192.168.0.150")
-#         self.client.on_message = self.on_msg
-#         self.sub = ""
-#         self.pins = Gpio_pins()
-
-#     def run(self):
-#         self.sub = "mlf/"+self.mlf_name+"/gpio"
-#         self.client.subscribe(self.sub)
-#         self.client.loop_forever()
-    
-#     def gpio_listen(self):
-#         self.client.unsubscribe(self.sub)
-#         self.sub = "mlf/"+self.mlf_name+"/gpio"
-#         self.client.on_message = self.on_msg
-#         self.client.subscribe(self.sub)
-
-#     def on_msg(self, client, userdata, message):
-#         self.pins.setpins(ast.literal_eval(str(message.payload.decode("utf-8"))))   
-
-#     def getpins(self):
-#         return(self.pins.getpins())
 
 class Mqtt_Thread(threading.Thread):
     def __init__(self, ip, linkedRobotNumber): #demarrage et initialisation du thread
         threading.Thread.__init__(self)
-        self.mlf_name = socket.gethostname()
+        self.name = socket.gethostname()
         self.ip=ip
         if(linkedRobotNumber != 0):
-            self.clientPair = mqtt.Client(self.mlf_name+"_pairmaster")
+            self.clientPair = mqtt.Client(self.name+"_pairmaster")
             self.clientPair.connect("192.168.0."+ str(100+linkedRobotNumber)) #linkedrobot est le robot auquel le robot est rattache
             self.clientPair.message_callback_add("finished", self.finishedForMe_incr)
 
-        self.client = mqtt.Client(self.mlf_name+"_master")
+        self.client = mqtt.Client(self.name+"_master")
         self.client.connect(self.ip) 
 
         #MQTT TOPICS CALLBACK DEFINE--------------------------------------------------------------
