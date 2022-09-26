@@ -82,13 +82,11 @@ class NedCMD(threading.Thread):
                     self.mqtt.finishHandle()
                 elif(cmd[0] == "registeredPose"):
                     self.cmdRegisteredPose(cmd[-1])
-                elif(cmd[0] == "PlaceWithMatrix"):
-                    self.cmdPlaceWithMatrix(cmd[1], cmd[2], cmd[3], cmd[4], cmd[5])
                 elif(cmd[0] == "SetMaxSpeed"):
                     self.cmdMaxSpeed(int(cmd[1]))
                 else:
                     time.sleep(0.1)
-                    
+
     def move(self, goto):
         self.ned.move_joints(goto[0], goto[1], goto[2], goto[3], goto[4], goto[5])
     
@@ -273,33 +271,6 @@ class NedCMD(threading.Thread):
         x_rel = float(coords[0]) / img.shape[1]
         y_rel = float(coords[1]) / img.shape[0]
         return(x_rel, y_rel)
-
-
-    def cmdPlaceWithMatrix(self, workspace, ligne, col, angle, offset ):
-        pose = None
-        img = self.ned.get_img_compressed()
-        img = uncompress_image(img)
-        img_cut = Get_matrix_from_contours.cut_img(img)
-        baricenter_matrix = Get_matrix_from_contours.get_matrix_position(img_cut,8, 3)
-        print("matrix baricenters"+str(baricenter_matrix))
-        print("cut image shape"+ str(img_cut.shape))
-        x = baricenter_matrix[int(ligne)][int(col)][0]
-        y = baricenter_matrix[int(ligne)][int(col)][1]
-        x_rel, y_rel = self.get_rel_pose((x,y),img_cut)
-
-        #ici on envoie la requete et on att la reponse
-        #workspace, xrel, yrel, angle, offset
-        self.mqtt.send_ask_matrix_pose(workspace, x_rel, y_rel, angle, offset)
-
-        while self.mqtt.poseFromMatrix == []:
-            time.sleep(1)
-        poseString = self.mqtt.poseFromMatrix
-        self.mqtt.reset_poseFromMatrix()
-        poseString = poseString.splitlines(False)
-        #print(poseString)
-        pose = [float(poseString[4].split(":")[1]),float(poseString[5].split(":")[1]), float(poseString[6].split(":")[1]),float(poseString[8].split(":")[1]),float(poseString[9].split(":")[1]),float(poseString[10].split(":")[1])]
-        print(pose)
-        self.ned.move_pose(pose)
 
     def cmdMaxSpeed(self,percentage):
         self.ned.set_arm_max_velocity(percentage)
