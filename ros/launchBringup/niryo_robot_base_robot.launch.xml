@@ -80,7 +80,7 @@
         </include>
     </group>
 
-    <include file="$(find extra_port)/launch/mlf_extra_port.launch"></include>
+    <include file="$(find extra_port)/launch/extra_port.launch"></include>
     <include file="$(find rfid)/launch/rfid_read.launch"></include>
     <include file="$(find mlf_vision_treatment)/launch/mlf_vision_treatment.launch"></include>
 </launch>
